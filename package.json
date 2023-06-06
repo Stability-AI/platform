@@ -6,6 +6,15 @@
       "packages/*"
     ]
   },
+  "engines": {
+    "node": "16.x"
+  },
+  "lint-staged": {
+    "./packages/**/*.{ts,tsx,js,jsx,md}": [
+      "prettier --write",
+      "eslint --fix"
+    ]
+  },
   "scripts": {
     "codesandbox": "yarn install",
     "postinstall": "node -e \"try { require('husky').install() } catch (e) {if (e.code !== 'MODULE_NOT_FOUND') throw e}\" && yarn build",
@@ -24,10 +33,5 @@
     "rimraf": "^5.0.1",
     "yarn": "^1.22.19"
   },
-  "lint-staged": {
-    "./packages/**/*.{ts,tsx,js,jsx,md}": [
-      "prettier --write",
-      "eslint --fix"
-    ]
-  }
+ 
 }
