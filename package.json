@@ -7,6 +7,7 @@
     ]
   },
   "scripts": {
+    "codesandbox": "yarn install",
     "postinstall": "node -e \"try { require('husky').install() } catch (e) {if (e.code !== 'MODULE_NOT_FOUND') throw e}\" && yarn build",
     "app": "yarn workspace @stability/app",
     "sandbox-text-to-image": "yarn workspace @stability/sandbox-text-to-image",

@@ -1,4 +1,4 @@
 {
-  "installCommand": "yarn",
+  "installCommand": "codesandbox",
   "buildCommand": false
 }
