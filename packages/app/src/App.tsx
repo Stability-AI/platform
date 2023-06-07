@@ -1,5 +1,7 @@
 import { Topbar } from "./Topbar";
 
+console.log("App");
+
 export function App() {
   return (
     <div className="flex h-screen w-screen flex-col">
