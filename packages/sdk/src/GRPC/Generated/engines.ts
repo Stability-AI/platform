@@ -48,6 +48,10 @@ export interface EngineInfo {
    * @generated from protobuf field: string description = 7;
    */
   description: string;
+  /**
+   * @generated from protobuf field: bool can_fine_tune = 8;
+   */
+  canFineTune: boolean;
 }
 /**
  * Empty
@@ -136,6 +140,12 @@ class EngineInfo$Type extends MessageType<EngineInfo> {
         kind: "scalar",
         T: 9 /*ScalarType.STRING*/,
       },
+      {
+        no: 8,
+        name: "can_fine_tune",
+        kind: "scalar",
+        T: 8 /*ScalarType.BOOL*/,
+      },
     ]);
   }
   create(value?: PartialMessage<EngineInfo>): EngineInfo {
@@ -147,6 +157,7 @@ class EngineInfo$Type extends MessageType<EngineInfo> {
       tokenizer: 0,
       name: "",
       description: "",
+      canFineTune: false,
     };
     globalThis.Object.defineProperty(message, MESSAGE_TYPE, {
       enumerable: false,
@@ -187,6 +198,9 @@ class EngineInfo$Type extends MessageType<EngineInfo> {
           break;
         case /* string description */ 7:
           message.description = reader.string();
+          break;
+        case /* bool can_fine_tune */ 8:
+          message.canFineTune = reader.bool();
           break;
         default:
           let u = options.readUnknownField;
@@ -232,6 +246,9 @@ class EngineInfo$Type extends MessageType<EngineInfo> {
     /* string description = 7; */
     if (message.description !== "")
       writer.tag(7, WireType.LengthDelimited).string(message.description);
+    /* bool can_fine_tune = 8; */
+    if (message.canFineTune !== false)
+      writer.tag(8, WireType.Varint).bool(message.canFineTune);
     let u = options.writeUnknownFields;
     if (u !== false)
       (u == true ? UnknownFieldHandler.onWrite : u)(

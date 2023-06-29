@@ -16,6 +16,7 @@ import { Link } from "./Link";
 import { Plus } from "./Plus";
 import { Python } from "./Python";
 import { Spinner } from "./Spinner";
+import { Token } from "./Token";
 import { TypeScript } from "./TypeScript";
 import { Union } from "./Union";
 import { Upload } from "./Upload";
@@ -50,6 +51,7 @@ export declare namespace Icon {
     Python,
     TypeScript,
     ChevronRight,
+    Token
   };
 }
 
@@ -76,4 +78,5 @@ export namespace Icon {
   Icon.Python = Python;
   Icon.TypeScript = TypeScript;
   Icon.ChevronRight = ChevronRight;
+  Icon.Token = Token;
 }

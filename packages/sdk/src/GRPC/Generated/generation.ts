@@ -429,6 +429,60 @@ export interface TransformType {
       };
 }
 /**
+ * @generated from protobuf message gooseai.CAIParameters
+ */
+export interface CAIParameters {
+  /**
+   * @generated from protobuf oneof: parameters
+   */
+  parameters:
+    | {
+        oneofKind: "modelMetadata";
+        /**
+         * @generated from protobuf field: gooseai.CAIParameters.ModelMetadata model_metadata = 1;
+         */
+        modelMetadata: CAIParameters_ModelMetadata;
+      }
+    | {
+        oneofKind: undefined;
+      };
+}
+/**
+ * @generated from protobuf enum gooseai.CAIParameters.ModelMetadata
+ */
+export enum CAIParameters_ModelMetadata {
+  /**
+   * @generated from protobuf enum value: MODEL_METADATA_UNSPECIFIED = 0;
+   */
+  UNSPECIFIED = 0,
+  /**
+   * @generated from protobuf enum value: MODEL_METADATA_SIGN_WITH_ENGINE_ID = 1;
+   */
+  SIGN_WITH_ENGINE_ID = 1,
+}
+/**
+ * FineTuningParameters specify which fine-tuned models to use for generation.
+ *
+ * @generated from protobuf message gooseai.FineTuningParameters
+ */
+export interface FineTuningParameters {
+  /**
+   * The id of the fine-tuned model to generate content from.
+   * See FineTuningModel.id in finetuning.proto.
+   * Model Id is created upon invoking CreateFineTuningModel.
+   * When GetFineTuningModelStatus returns a FineTuningModelStatus of
+   * FINE_TUNING_MODEL_STATUS_COMPLETED, the model can be used
+   * for generating images.
+   *
+   * @generated from protobuf field: string model_id = 1;
+   */
+  modelId: string;
+  /**
+   * @generated from protobuf field: optional float weight = 2;
+   */
+  weight?: number; // defaults to 1.0
+}
+/**
  * @generated from protobuf message gooseai.ImageParameters
  */
 export interface ImageParameters {
@@ -472,6 +526,14 @@ export interface ImageParameters {
    * @generated from protobuf field: optional bool quantize = 10;
    */
   quantize?: boolean; // defaults to true
+  /**
+   * @generated from protobuf field: optional gooseai.CAIParameters cai_parameters = 11;
+   */
+  caiParameters?: CAIParameters; // Set field to have image signed by C2PA
+  /**
+   * @generated from protobuf field: repeated gooseai.FineTuningParameters fine_tuning_parameters = 12;
+   */
+  fineTuningParameters: FineTuningParameters[]; // next available tag: 13
 }
 /**
  * @generated from protobuf message gooseai.ClassifierConcept
@@ -3283,6 +3345,176 @@ class TransformType$Type extends MessageType<TransformType> {
  */
 export const TransformType = new TransformType$Type();
 // @generated message type with reflection information, may provide speed optimized methods
+class CAIParameters$Type extends MessageType<CAIParameters> {
+  constructor() {
+    super("gooseai.CAIParameters", [
+      {
+        no: 1,
+        name: "model_metadata",
+        kind: "enum",
+        oneof: "parameters",
+        T: () => [
+          "gooseai.CAIParameters.ModelMetadata",
+          CAIParameters_ModelMetadata,
+          "MODEL_METADATA_",
+        ],
+      },
+    ]);
+  }
+  create(value?: PartialMessage<CAIParameters>): CAIParameters {
+    const message = { parameters: { oneofKind: undefined } };
+    globalThis.Object.defineProperty(message, MESSAGE_TYPE, {
+      enumerable: false,
+      value: this,
+    });
+    if (value !== undefined)
+      reflectionMergePartial<CAIParameters>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: CAIParameters
+  ): CAIParameters {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* gooseai.CAIParameters.ModelMetadata model_metadata */ 1:
+          message.parameters = {
+            oneofKind: "modelMetadata",
+            modelMetadata: reader.int32(),
+          };
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: CAIParameters,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions
+  ): IBinaryWriter {
+    /* gooseai.CAIParameters.ModelMetadata model_metadata = 1; */
+    if (message.parameters.oneofKind === "modelMetadata")
+      writer.tag(1, WireType.Varint).int32(message.parameters.modelMetadata);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message gooseai.CAIParameters
+ */
+export const CAIParameters = new CAIParameters$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class FineTuningParameters$Type extends MessageType<FineTuningParameters> {
+  constructor() {
+    super("gooseai.FineTuningParameters", [
+      { no: 1, name: "model_id", kind: "scalar", T: 9 /*ScalarType.STRING*/ },
+      {
+        no: 2,
+        name: "weight",
+        kind: "scalar",
+        opt: true,
+        T: 2 /*ScalarType.FLOAT*/,
+      },
+    ]);
+  }
+  create(value?: PartialMessage<FineTuningParameters>): FineTuningParameters {
+    const message = { modelId: "" };
+    globalThis.Object.defineProperty(message, MESSAGE_TYPE, {
+      enumerable: false,
+      value: this,
+    });
+    if (value !== undefined)
+      reflectionMergePartial<FineTuningParameters>(this, message, value);
+    return message;
+  }
+  internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: FineTuningParameters
+  ): FineTuningParameters {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* string model_id */ 1:
+          message.modelId = reader.string();
+          break;
+        case /* optional float weight */ 2:
+          message.weight = reader.float();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === "throw")
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d
+            );
+      }
+    }
+    return message;
+  }
+  internalBinaryWrite(
+    message: FineTuningParameters,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions
+  ): IBinaryWriter {
+    /* string model_id = 1; */
+    if (message.modelId !== "")
+      writer.tag(1, WireType.LengthDelimited).string(message.modelId);
+    /* optional float weight = 2; */
+    if (message.weight !== undefined)
+      writer.tag(2, WireType.Bit32).float(message.weight);
+    let u = options.writeUnknownFields;
+    if (u !== false)
+      (u == true ? UnknownFieldHandler.onWrite : u)(
+        this.typeName,
+        message,
+        writer
+      );
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message gooseai.FineTuningParameters
+ */
+export const FineTuningParameters = new FineTuningParameters$Type();
+// @generated message type with reflection information, may provide speed optimized methods
 class ImageParameters$Type extends MessageType<ImageParameters> {
   constructor() {
     super("gooseai.ImageParameters", [
@@ -3358,10 +3590,23 @@ class ImageParameters$Type extends MessageType<ImageParameters> {
         opt: true,
         T: 8 /*ScalarType.BOOL*/,
       },
+      {
+        no: 11,
+        name: "cai_parameters",
+        kind: "message",
+        T: () => CAIParameters,
+      },
+      {
+        no: 12,
+        name: "fine_tuning_parameters",
+        kind: "message",
+        repeat: 1 /*RepeatType.PACKED*/,
+        T: () => FineTuningParameters,
+      },
     ]);
   }
   create(value?: PartialMessage<ImageParameters>): ImageParameters {
-    const message = { seed: [], parameters: [] };
+    const message = { seed: [], parameters: [], fineTuningParameters: [] };
     globalThis.Object.defineProperty(message, MESSAGE_TYPE, {
       enumerable: false,
       value: this,
@@ -3420,6 +3665,23 @@ class ImageParameters$Type extends MessageType<ImageParameters> {
           break;
         case /* optional bool quantize */ 10:
           message.quantize = reader.bool();
+          break;
+        case /* optional gooseai.CAIParameters cai_parameters */ 11:
+          message.caiParameters = CAIParameters.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.caiParameters
+          );
+          break;
+        case /* repeated gooseai.FineTuningParameters fine_tuning_parameters */ 12:
+          message.fineTuningParameters.push(
+            FineTuningParameters.internalBinaryRead(
+              reader,
+              reader.uint32(),
+              options
+            )
+          );
           break;
         default:
           let u = options.readUnknownField;
@@ -3487,6 +3749,20 @@ class ImageParameters$Type extends MessageType<ImageParameters> {
     /* optional bool quantize = 10; */
     if (message.quantize !== undefined)
       writer.tag(10, WireType.Varint).bool(message.quantize);
+    /* optional gooseai.CAIParameters cai_parameters = 11; */
+    if (message.caiParameters)
+      CAIParameters.internalBinaryWrite(
+        message.caiParameters,
+        writer.tag(11, WireType.LengthDelimited).fork(),
+        options
+      ).join();
+    /* repeated gooseai.FineTuningParameters fine_tuning_parameters = 12; */
+    for (let i = 0; i < message.fineTuningParameters.length; i++)
+      FineTuningParameters.internalBinaryWrite(
+        message.fineTuningParameters[i],
+        writer.tag(12, WireType.LengthDelimited).fork(),
+        options
+      ).join();
     let u = options.writeUnknownFields;
     if (u !== false)
       (u == true ? UnknownFieldHandler.onWrite : u)(
