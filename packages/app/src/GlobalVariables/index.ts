@@ -7,6 +7,8 @@ import { twMerge } from "tailwind-merge";
 
 declare global {
   type ID = string;
+  type IDs = ID[];
+
   type URLString = string;
 
   type CSSValue = string;
@@ -24,6 +26,8 @@ declare global {
   var useContext: typeof ReactImport.useContext;
   var useLayoutEffect: typeof ReactImport.useLayoutEffect;
   var useDebugValue: typeof ReactImport.useDebugValue;
+
+  var ID: typeof IDNamespace;
 
   var keys: (...keys: (string | number | undefined)[]) => string;
   var css: typeof cssImport;
@@ -44,6 +48,18 @@ globalThis.useReducer = ReactImport.useReducer;
 globalThis.useContext = ReactImport.useContext;
 globalThis.useLayoutEffect = ReactImport.useLayoutEffect;
 globalThis.useDebugValue = ReactImport.useDebugValue;
+
+namespace IDNamespace {
+  export const create = (): ID =>
+    "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
+      const r = (Math.random() * 16) | 0,
+        v = c == "x" ? r : (r & 0x3) | 0x8;
+
+      return v.toString(16);
+    });
+}
+
+globalThis.ID = IDNamespace;
 
 globalThis.keys = function (...keys) {
   return keys.map((key) => `${key}`).join(".");

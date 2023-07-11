@@ -1,49 +1,25 @@
 import { useWindowSize } from "react-use";
 
+import { Code } from "~/Code";
 import { Theme } from "~/Theme";
 
-import { Code } from "./Code";
 import { List } from "./List";
 
-export function Sandbox<T extends Record<string, unknown>>({
-  SandboxComponent,
+export function Sandbox({
   samples,
-}: {
-  SandboxComponent: React.FC<{ setOptions: (options: T) => void }>;
-  samples: Record<Code.Language, string>;
+  children,
+}: React.PropsWithChildren & {
+  samples: Code.Samples;
 }) {
-  const [showCode, setShowCode] = useState(true);
-  const [codeLanguage, setCodeLanguage] = useState<Code.Language>("typescript");
-  const [options, setOptions] = useState<T>({} as T);
-
-  const code = useMemo(() => {
-    const hasActiveOption = Object.entries(options).find(
-      ([_, value]) => value !== undefined
-    );
-
-    if (!hasActiveOption) return undefined;
-
-    const code = samples[codeLanguage]
-      .trim()
-      .replace("{apiKey}", "YOUR API KEY");
-
-    // replace {VALUE} with the value from the options object
-    return Object.entries(options).reduce((acc, [key, value]) => {
-      return acc.replace(`{${key}}`, `${value}`);
-    }, code);
-  }, [samples, codeLanguage, options]);
-
   const size = useWindowSize();
-
+  const [showCode, setShowCode] = useState(true);
   return (
     <div className="flex h-full max-h-full min-h-0 grow flex-col gap-6 p-5 pt-0">
       <div className="flex min-h-0 grow gap-6">
         {size.width > 1024 &&
-          (showCode && code ? (
-            <Code
-              code={code}
-              language={codeLanguage}
-              setLanguage={setCodeLanguage}
+          (showCode ? (
+            <Code.Samples
+              samples={samples}
               onClose={() => setShowCode(false)}
             />
           ) : (
@@ -55,16 +31,10 @@ export function Sandbox<T extends Record<string, unknown>>({
               View Code
             </div>
           ))}
-        <SandboxComponent setOptions={setOptions} />
+        {children}
       </div>
     </div>
   );
 }
 
-export declare namespace Sandbox {
-  export { List };
-}
-
-export namespace Sandbox {
-  Sandbox.List = List;
-}
+Sandbox.List = List;
